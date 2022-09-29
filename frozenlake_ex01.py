@@ -2,7 +2,7 @@
 from tqdm import tqdm
 import gym
 
-env = gym.make("FrozenLake-v1", new_step_api=True)
+env = gym.make("FrozenLake-v1")
 
 num_episodes = 100
 num_timesteps = 50

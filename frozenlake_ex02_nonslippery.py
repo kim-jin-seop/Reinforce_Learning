@@ -1,6 +1,6 @@
 import numpy as np
 import gym
-env = gym.make("FrozenLake-v1", new_step_api=True, is_slippery=False)
+env = gym.make("FrozenLake-v1", is_slippery=False)
 
 def value_iteration(env):
     num_iterations = 1000
