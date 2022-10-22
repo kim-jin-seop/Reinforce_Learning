@@ -1,9 +1,5 @@
 from tqdm import tqdm
 import gym
-<<<<<<< HEAD:ex001.py
-=======
-
->>>>>>> 547efe252266b02803c651bab3ce1b306b94300d:frozenlake_ex01.py
 env = gym.make("FrozenLake-v1")
 
 num_episodes = 100
