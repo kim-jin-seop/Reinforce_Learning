@@ -1,5 +1,4 @@
 import gym
-import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import random
@@ -7,6 +6,7 @@ import collections
 import torch
 import torch.optim as optim
 
+gamma = 0.98
 batch_size = 32
 buffer_limit = 50000
 learning_rate = 0.0005
@@ -47,16 +47,20 @@ class ReplayBuffer():
             s_list.append(s)
             a_list.append([a])
             r_list.append([r])
-            s_prime.append(s_prime)
+            s_prime_list.append(s_prime)
             done_mask_list.append([done_mask])
 
-        return torch.tensor(s_list, dtype= torch.float), torch.tensor(a_list), torch.tensor(r_list), \
-               torch.tensor(s_prime_list,dtype=torch.float), torch.tensor(done_mask_list)
+        return torch.tensor(s_list, dtype=torch.float), torch.tensor(a_list), torch.tensor(r_list), \
+               torch.tensor(s_prime_list, dtype=torch.float), torch.tensor(done_mask_list)
+
+    def size(self):
+        return len(self.buffer)
+
 
 def train(q, q_target, memory, optimizer):
 
     for i in range(10):
-        s, a, r, s_prime, done_mask = memory.sample()
+        s, a, r, s_prime, done_mask = memory.sample(batch_size)
 
         q_out = q(s)
         q_a = q_out.gather(1,a)
@@ -103,7 +107,9 @@ def main():
 
         if n_epi % print_interval == 0 and n_epi != 0:
             q_target.load_state_dict(q.state_dict())
-            print("n_episode : {}, score : {:.1f}, n_buffer: {}, eps: {:.1f}%".format(n_epi, score/print_interval,))
+            print("n_episode : {}, score : {:.1f}, n_buffer: {}, eps: {:.1f}%"
+                  .format(n_epi, score/print_interval, memory.size(), epsilon*100))
+            score = 0
 
 
 if __name__ == '__main__':
