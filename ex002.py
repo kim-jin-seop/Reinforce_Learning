@@ -16,8 +16,8 @@ def value_iteration(env):
 
         for s in range(env.observation_space.n):
 
-            Q_values = [sum([prob*(r + gamma * updated_value_table[s_]) 
-                             for prob, s_, r, _ in env.P[s][a]]) 
+            Q_values = [sum([prob*(r + gamma * updated_value_table[s_])
+                             for prob, s_, r, _ in env.P[s][a]])
                                    for a in range(env.action_space.n)]
 
             value_table[s] = max(Q_values)

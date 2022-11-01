@@ -3,7 +3,7 @@ import pandas as pd
 from collections import defaultdict
 from tqdm import tqdm
 
-env = gym.make('Blackjack-v0')
+env = gym.make('Blackjack-v1')
 num_timesteps = 100
 
 def policy(state):
